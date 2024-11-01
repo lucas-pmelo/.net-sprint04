@@ -1,4 +1,4 @@
-# Sprint 03 - .NET
+# Sprint 04 - .NET
 
 - Augusto Barcelos Barros – RM: 98078
 - Gabriel Souza de Queiroz – RM: 98570
@@ -18,6 +18,18 @@ A implementação da API seguirá os princípios da arquitetura monolítica, ond
 Uma das principais diferenças entre uma arquitetura monolítica e uma arquitetura de microservices é a forma como os módulos são gerenciados e implantados. Em uma arquitetura de microservices, cada serviço é independente, com seu próprio ciclo de vida, podendo ser desenvolvido, implantado e escalado separadamente. Isso proporciona maior flexibilidade e resiliência, especialmente em sistemas complexos e de grande escala. No entanto, essa abordagem também traz desafios adicionais, como a necessidade de gerenciar a comunicação entre serviços, lidar com a consistência de dados distribuídos e orquestrar a implantação de múltiplos serviços.
 
 No contexto do nosso projeto atual, onde o objetivo é criar uma solução eficiente e de fácil manutenção, a arquitetura monolítica se mostra mais adequada. Entretanto, à medida que o projeto evoluir, novas funcionalidades forem adicionadas e a complexidade do sistema aumentar, será natural considerar a migração para uma arquitetura de microservices. Isso permitirá uma melhor separação de domínios, facilitando a escalabilidade, a manutenção e a adição de novas funcionalidades de forma organizada e estruturada.
+
+## Testes unitários
+
+Adicionamos alguns testes unitários na nossa classe core, Customer, para poder testar alguns fluxos em todos os endpoints que essa entidade possui, pois acreditamos que como o cliente é o ponto principal de nossa solução, precisamos que o fluxo inteiro esteja em total funcionamento, e com os testes unitários, conseguimos garantir isso. Foi aplicada uma cobertura de código de 100% em todo fluxo do Customer.
+
+## API externa
+
+Como consulta a uma API externa, adicionamos um endpoint que tem como funcionalidade, na hora que um cliente vai procurar alguma clinica para se consultar, acionamos esse endpoint, que valida se o cep atual dele é um cep valido, para que possamos fazer a análise correta e recomendações sejam feitas o mais precisamente possivel.
+
+## IA generativa
+
+A análise de IA generativa foi escolhida para o projeto com o objetivo de enriquecer a experiência do usuário, oferecendo personalização e insights úteis. A funcionalidade de recomendação sugere itens que podem ser do interesse de cada cliente, enquanto a análise de sentimento interpreta o tom das mensagens, permitindo uma interação mais empática e adequada com os usuários.
 
 ---
 
@@ -109,6 +121,28 @@ Endpoints disponíveis:
      - `204 NoContent`: Cliente excluído.
      - `404 NotFound`: Cliente não encontrado.
      - `400 BadRequest`: ID inválido.
+
+5. **GET /api/customer/validate-cep/{cep}**
+   Valida o CEP do cliente usando um serviço externo.
+   
+   - **Respostas**:
+      - `200 OK`: CEP válido com informações detalhadas.
+      - `400 BadRequest`: CEP inválido ou formato incorreto.
+
+6. **GET /api/customer/{id}/recommendations**
+   Retorna uma lista de recomendações de produtos personalizadas para o cliente com o ID especificado.
+
+   - **Respostas**:
+      - `200 OK`: Lista de recomendações.
+      - `404 NotFound`: Cliente não encontrado.
+
+7. **POST /api/customer/analyze-sentiment**
+   Realiza a análise de sentimento sobre o texto fornecido, retornando uma interpretação do tom (positivo, negativo ou neutro).
+
+   - **Body**: String de texto para análise.
+   - **Respostas**:
+      - `200 OK`: Resultado da análise de sentimento.
+      - `400 BadRequest`: Texto inválido ou não fornecido.
 
 ---
 
